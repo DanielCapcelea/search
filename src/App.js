@@ -11,9 +11,25 @@ function App() {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [usersPerPage] = useState(10);
+    const [usersPerPage] = useState(50);
 
-    //Server request method
+
+    //Change Page
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    }
+
+
+    const nextPage = () => {
+        console.log('next')
+    }
+
+    const prevPage = () => {
+        console.log('prev')
+
+    }
+
+    //Api request method
     useEffect(() => {
         const fetchUsers = async () => {
             setLoading(true);
@@ -25,7 +41,7 @@ function App() {
     }, [query]);
 
 
-    // table method
+    // local search method
     // const keys = ['first_name', 'last_name', 'email'];
     // const search = (data) => {
     //     return data.filter(
@@ -54,27 +70,12 @@ function App() {
             >
                 <FormControl type="text" placeholder='Search...' onChange={e => setQuery(e.target.value)}/>
             </FloatingLabel>
-            {/*Classic search by first_name*/}
-
-            {/*<ul className="list">*/}
-            {/*    {Users.filter((user) =>*/}
-            {/*        user.first_name.toLowerCase().includes(query)*/}
-            {/*    ).map((user) => (*/}
-            {/*        <li key={user.id} className="listItem">*/}
-            {/*            {user.first_name}*/}
-            {/*        </li>*/}
-            {/*    ))}*/}
-            {/*</ul>*/}
 
 
-            {/*Table local data search with more parameters*/}
-
-            {/*<Table data={search(Users)}/>*/}
-
-
-            {/*Table search getting data from server*/}
+            {/*Table search getting data from api*/}
             <UsersTable data={currentUsers} loading={loading}/>
-            <Pagination usersPerPage={usersPerPage} totalUsers={data.length}/>
+            <Pagination usersPerPage={usersPerPage} totalUsers={data.length} paginate={paginate} nextPage={nextPage}
+                        prevPage={prevPage}/>
         </div>
     );
 }
