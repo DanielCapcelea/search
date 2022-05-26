@@ -1,25 +1,31 @@
 import './App.css';
-import {Users} from "./users";
 import {useEffect, useState} from "react";
-import Table from "./Table";
+import UsersTable from "./components/Table";
+import Pagination from "./components/Pagination";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {FloatingLabel, FormControl} from "react-bootstrap";
 
 function App() {
     const [query, setQuery] = useState('');
     const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [usersPerPage] = useState(10);
 
     //Server request method
     useEffect(() => {
         const fetchUsers = async () => {
-            const res = await axios.get("http://localhost:5001")
-            setData(res.data)
+            setLoading(true);
+            const res = await axios.get(`http://localhost:5001?queryRequest=${query}`);
+            setData(res.data);
+            setLoading(false);
         };
-        fetchUsers();
-    }, [])
+        if (query.length === 0 || query.length > 1) fetchUsers();
+    }, [query]);
 
 
     // table method
-
     // const keys = ['first_name', 'last_name', 'email'];
     // const search = (data) => {
     //     return data.filter(
@@ -34,11 +40,21 @@ function App() {
     //     )
     // }
 
+    // Get current users
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = data.slice(indexOfFirstUser, indexOfLastUser);
+
+
     return (
         <div className="app">
-            <input type="text" placeholder="Search..." className="search" onChange={e => setQuery(e.target.value)}/>
-
-            {/*Classic search*/}
+            <FloatingLabel
+                controlId="floatingInput"
+                label="Search..."
+            >
+                <FormControl type="text" placeholder='Search...' onChange={e => setQuery(e.target.value)}/>
+            </FloatingLabel>
+            {/*Classic search by first_name*/}
 
             {/*<ul className="list">*/}
             {/*    {Users.filter((user) =>*/}
@@ -57,8 +73,8 @@ function App() {
 
 
             {/*Table search getting data from server*/}
-            {<Table data={data}/>}
-
+            <UsersTable data={currentUsers} loading={loading}/>
+            <Pagination usersPerPage={usersPerPage} totalUsers={data.length}/>
         </div>
     );
 }

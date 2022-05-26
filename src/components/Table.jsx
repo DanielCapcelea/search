@@ -1,21 +1,29 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Table} from "react-bootstrap";
 
-const Table = ({data}) => {
+const UsersTable = ({data, loading}) => {
+    if (loading) {
+        return (
+            <h2>Loading...</h2>
+        )
+    }
     return (
-        <table>
-            <tbody>
+        <Table striped bordered hover>
+            <thead>
             <tr>
-                <th>
+                <th scope="col">
                     Name
                 </th>
-                <th>
+                <th scope="col">
                     Lastname
                 </th>
-                <th>
+                <th scope="col">
                     Email
                 </th>
-
             </tr>
+            </thead>
+            <tbody>
             {data.map((item) => (
                 <tr key={item.id}>
                     <td>
@@ -32,8 +40,8 @@ const Table = ({data}) => {
             ))}
 
             </tbody>
-        </table>
+        </Table>
     );
 };
 
-export default Table;
+export default UsersTable;
