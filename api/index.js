@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
         );
     };
 
-    queryRequest ? res.json(search(Users).slice(0, 10)) : res.json(Users);
+    queryRequest ? res.json(search(Users)) : res.json(Users);
 });
 
 app.listen(5001, () => console.log("API is working!"));

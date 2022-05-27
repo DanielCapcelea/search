@@ -11,7 +11,7 @@ function App() {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [usersPerPage] = useState(50);
+    const [usersPerPage] = useState(10);
 
 
     //Change Page
