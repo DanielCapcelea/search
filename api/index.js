@@ -6,6 +6,9 @@ const app = express();
 
 app.use(cors());
 
+const hostname = '0.0.0.0';
+const port = process.env.PORT || 5002;
+
 app.get("/", (req, res) => {
     const {queryRequest} = req.query;
 
@@ -20,4 +23,4 @@ app.get("/", (req, res) => {
     queryRequest ? res.json(search(Users)) : res.json(Users);
 });
 
-app.listen(5001, () => console.log("API is working!"));
+app.listen(port, () => console.log("API is working!"));
