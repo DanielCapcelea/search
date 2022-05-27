@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Pagination} from "react-bootstrap";
 
-const UserPagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, paginate, nextPage, prevPage}) => {
+const UserPagination = ({usersPerPage, currentPage, currentUsers, setCurrentPage, totalUsers, paginate}) => {
 
-    const [pageNumberLimit, setPageNumberLimit] = useState(5);
+    const [pageNumberLimit] = useState(5);
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
@@ -34,12 +34,12 @@ const UserPagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, 
 
     let pageIncrementBtn = null;
     if (pageNumbers.length > maxPageNumberLimit) {
-        pageIncrementBtn = <li onClick={handleNextBtn}> <Pagination.Ellipsis /> </li>;
+        pageIncrementBtn = <div onClick={handleNextBtn}><Pagination.Ellipsis/></div>;
     }
 
     let pageDecrementBtn = null;
     if (minPageNumberLimit >= 1) {
-        pageDecrementBtn = <li onClick={handlePrevBtn}> <Pagination.Ellipsis /> </li>;
+        pageDecrementBtn = <div onClick={handlePrevBtn}><Pagination.Ellipsis/></div>;
     }
 
 
@@ -64,21 +64,28 @@ const UserPagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, 
 
     return (
         <Pagination className="pagination justify-content-center">
-            <Button
-                onClick={handlePrevBtn}
-                disabled={currentPage === pageNumbers[0]}
-            >
-                Prev
-            </Button>
+            {currentUsers.length > 0 ?
+                <Button
+                    onClick={handlePrevBtn}
+                    disabled={currentPage === pageNumbers[0]}
+                >
+                    Prev
+                </Button>
+                : <h2 style={{padding: '3rem'}}>User Not Found</h2>
+            }
+
             {pageDecrementBtn}
             {renderPageNumbers}
             {pageIncrementBtn}
+
+            {currentUsers.length > 0 &&
             <Button
                 onClick={handleNextBtn}
                 disabled={currentPage === pageNumbers[pageNumbers.length - 1]}
             >
                 Next
             </Button>
+            }
         </Pagination>
     );
 };

@@ -11,23 +11,13 @@ function App() {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [usersPerPage] = useState(10);
+    const [usersPerPage] = useState(20);
 
 
     //Change Page
     const paginate = (event) => {
         setCurrentPage(Number(event.target.id));
     };
-
-
-    const nextPage = () => {
-        console.log('next')
-    }
-
-    const prevPage = () => {
-        console.log('prev')
-
-    }
 
     //Api request method
     useEffect(() => {
@@ -74,9 +64,12 @@ function App() {
 
             {/*Table search getting data from api*/}
             <UsersTable data={currentUsers} loading={loading}/>
-            <UserPagination usersPerPage={usersPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage}
-                             totalUsers={data.length} paginate={paginate} nextPage={nextPage}
-                             prevPage={prevPage}/>
+            <UserPagination usersPerPage={usersPerPage}
+                            currentUsers={currentUsers}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            totalUsers={data.length} paginate={paginate}
+            />
         </div>
     );
 }
