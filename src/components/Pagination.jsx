@@ -63,7 +63,9 @@ const UserPagination = ({usersPerPage, currentPage, currentUsers, setCurrentPage
 
 
     return (
-        <Pagination className="pagination justify-content-center">
+        <Pagination
+            style={{margin: '15px'}}
+            className="pagination justify-content-center">
             {currentUsers.length > 0 ?
                 <Button
                     onClick={handlePrevBtn}
@@ -75,7 +77,11 @@ const UserPagination = ({usersPerPage, currentPage, currentUsers, setCurrentPage
             }
 
             {pageDecrementBtn}
-            {renderPageNumbers}
+
+            {currentUsers.length < 20 ?
+                <span style={{margin: '0 15px'}}>{renderPageNumbers}</span> : renderPageNumbers
+            }
+
             {pageIncrementBtn}
 
             {currentUsers.length > 0 &&
