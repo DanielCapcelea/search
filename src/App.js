@@ -1,7 +1,7 @@
 import './App.css';
 import {useEffect, useState} from "react";
 import UsersTable from "./components/Table";
-import Pagination from "./components/Pagination";
+import UsersPagination from "./components/Pagination";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {FloatingLabel, FormControl} from "react-bootstrap";
@@ -74,7 +74,7 @@ function App() {
 
             {/*Table search getting data from api*/}
             <UsersTable data={currentUsers} loading={loading}/>
-            <Pagination usersPerPage={usersPerPage} totalUsers={data.length} paginate={paginate} nextPage={nextPage}
+            <UsersPagination usersPerPage={usersPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalUsers={data.length} paginate={paginate} nextPage={nextPage}
                         prevPage={prevPage}/>
         </div>
     );

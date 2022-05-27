@@ -1,28 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Button} from "react-bootstrap";
 
-const Pagination = ({usersPerPage, totalUsers, paginate, nextPage, prevPage}) => {
-
+const Pagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, paginate, nextPage, prevPage}) => {
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
         pageNumbers.push(i);
     }
 
+    const handleNextbtn = () => {
+        setCurrentPage(currentPage + 1);
+
+    };
+
+    const handlePrevbtn = () => {
+        setCurrentPage(currentPage - 1);
+
+    };
+
+
     return (
         <nav>
             <ul className="pagination justify-content-center">
-                <li className="page-item">
-                    <a className="page-link" href="#" onClick={() => prevPage()}>Previous</a>
-                </li>
-                {pageNumbers.map(num => (
-                    <li className="page-item" key={num}>
-                        <a onClick={() => paginate(num)} href={`#${num}`} className="page-link">{num}</a>
+                <Button
+                    onClick={handlePrevbtn}
+                    disabled={currentPage === pageNumbers[0]}
+                >
+                    Prev
+                </Button>
+                {pageNumbers.map(pageNumber => (
+                    <li className="page-item" key={pageNumber}>
+                        <a onClick={() => paginate(pageNumber)} className="page-link ">
+                            {pageNumber}
+                        </a>
                     </li>
                 ))}
-                <li className="page-item">
-                    <a className="page-link" href="#" onClick={() => nextPage()}>Next</a>
-                </li>
+                <Button
+                    onClick={handleNextbtn}
+                    disabled={currentPage === pageNumbers[pageNumbers.length - 1]}
+                >
+                    Next
+                </Button>
             </ul>
         </nav>
     );
