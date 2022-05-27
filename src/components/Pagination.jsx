@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button} from "react-bootstrap";
+import {Button, Pagination} from "react-bootstrap";
 
-const Pagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, paginate, nextPage, prevPage}) => {
+const UserPagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, paginate, nextPage, prevPage}) => {
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
         pageNumbers.push(i);
     }
 
-    const handleNextbtn = () => {
+    const handleNextBtn = () => {
         setCurrentPage(currentPage + 1);
 
     };
 
-    const handlePrevbtn = () => {
+    const handlePrevBtn = () => {
         setCurrentPage(currentPage - 1);
 
     };
@@ -22,29 +22,33 @@ const Pagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, pagi
 
     return (
         <nav>
-            <ul className="pagination justify-content-center">
+            <Pagination className="pagination justify-content-center">
                 <Button
-                    onClick={handlePrevbtn}
+                    onClick={handlePrevBtn}
                     disabled={currentPage === pageNumbers[0]}
                 >
                     Prev
                 </Button>
                 {pageNumbers.map(pageNumber => (
-                    <li className="page-item" key={pageNumber}>
-                        <a onClick={() => paginate(pageNumber)} className="page-link ">
-                            {pageNumber}
-                        </a>
-                    </li>
+                    <Pagination.Item
+                        className={currentPage === pageNumber ? "active" : null}
+                        id={pageNumber}
+                        key={pageNumber}
+                        onClick={paginate}
+
+                    >
+                        {pageNumber}
+                    </Pagination.Item>
                 ))}
                 <Button
-                    onClick={handleNextbtn}
+                    onClick={handleNextBtn}
                     disabled={currentPage === pageNumbers[pageNumbers.length - 1]}
                 >
                     Next
                 </Button>
-            </ul>
+            </Pagination>
         </nav>
     );
 };
 
-export default Pagination;
+export default UserPagination;
