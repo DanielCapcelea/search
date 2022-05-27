@@ -35,7 +35,7 @@ const UserPagination = ({usersPerPage, currentPage, setCurrentPage, totalUsers, 
                         id={pageNumber}
                         key={pageNumber}
                         onClick={paginate}
-
+                        href={`#${pageNumber}`}
                     >
                         {pageNumber}
                     </Pagination.Item>
