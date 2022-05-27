@@ -19,11 +19,13 @@ function App() {
         setCurrentPage(Number(event.target.id));
     };
 
+    // my deployed api
+    // https://secure-lake-88576.herokuapp.com/
     //Api request method
     useEffect(() => {
         const fetchUsers = async () => {
             setLoading(true);
-            const res = await axios.get(`http://localhost:5001?queryRequest=${query}`);
+            const res = await axios.get(`https://secure-lake-88576.herokuapp.com/?queryRequest=${query}`);
             setData(res.data);
             setLoading(false);
         };
@@ -68,7 +70,8 @@ function App() {
                             currentUsers={currentUsers}
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
-                            totalUsers={data.length} paginate={paginate}
+                            totalUsers={data.length}
+                            paginate={paginate}
             />
         </div>
     );
